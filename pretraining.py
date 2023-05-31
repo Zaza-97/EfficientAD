@@ -105,7 +105,7 @@ def main():
 
         tqdm_obj.set_description(f'{(loss.item())}')
 
-        if iteration % 10000 == 0:
+        if iteration % 1000 == 0:
             torch.save(pdn,
                        os.path.join(config.output_folder,
                                     f'teacher_{model_size}_tmp.pth'))
