@@ -31,7 +31,7 @@ def get_argparse():
                              'pretraining penalty. Or see README.md to' +
                              'download ImageNet and set to ImageNet path')
     parser.add_argument('-a', '--mvtec_ad_path',
-                        default='./mvtec_anomaly_detection',
+                        default='/kaggle/input/mvtec-ad',
                         help='Downloaded Mvtec AD dataset')
     parser.add_argument('-b', '--mvtec_loco_path',
                         default='./mvtec_loco_anomaly_detection',
