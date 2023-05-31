@@ -24,9 +24,9 @@ def get_argparse():
     parser.add_argument('-o', '--output_dir', default='output/1')
     parser.add_argument('-m', '--model_size', default='small',
                         choices=['small', 'medium'])
-    parser.add_argument('-w', '--weights', default='models/teacher_small.pth')
+    parser.add_argument('-w', '--weights', default='output/pretraining/1/teacher_small.pth')
     parser.add_argument('-i', '--imagenet_train_path',
-                        default='none',
+                        default='/kaggle/working/ImgNet_train/content/train',
                         help='Set to "none" to disable ImageNet' +
                              'pretraining penalty. Or see README.md to' +
                              'download ImageNet and set to ImageNet path')
@@ -36,7 +36,7 @@ def get_argparse():
     parser.add_argument('-b', '--mvtec_loco_path',
                         default='./mvtec_loco_anomaly_detection',
                         help='Downloaded Mvtec LOCO dataset')
-    parser.add_argument('-t', '--train_steps', type=int, default=70000)
+    parser.add_argument('-t', '--train_steps', type=int, default=11)
     return parser.parse_args()
 
 # constants
