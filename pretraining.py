@@ -89,7 +89,7 @@ def main():
 
     optimizer = torch.optim.Adam(pdn.parameters(), lr=1e-4, weight_decay=1e-5)
 
-    tqdm_obj = tqdm(range(60000))
+    tqdm_obj = tqdm(range(1000)) # 60000
     for iteration, (image_fe, image_pdn) in zip(tqdm_obj, train_loader):
         if on_gpu:
             image_fe = image_fe.cuda()
