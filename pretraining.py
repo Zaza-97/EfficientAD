@@ -27,7 +27,7 @@ def get_argparse():
 
 # variables
 model_size = 'small'
-imagenet_train_path = './ILSVRC/Data/CLS-LOC/train'
+imagenet_train_path = '/kaggle/working/ImgNet_train/content/train' 
 seed = 42
 on_gpu = torch.cuda.is_available()
 device = 'cuda' if on_gpu else 'cpu'
