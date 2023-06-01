@@ -28,6 +28,8 @@ def get_argparse():
 # variables
 model_size = 'small'
 imagenet_train_path = '/kaggle/working/ImgNet_train/content/train' 
+state_path = ''
+PATH = 'model.pt' # aggiunto per ripredere training da checkpoint
 seed = 42
 on_gpu = torch.cuda.is_available()
 device = 'cuda' if on_gpu else 'cpu'
@@ -82,14 +84,26 @@ def main():
 
     channel_mean, channel_std = feature_normalization(extractor=extractor,
                                                       train_loader=train_loader)
-
+    
+    if state_path != '':
+      pnd.load_state_dict(torch.load(state_path))
+      
+    '''  
+    if PATH != '':
+      checkpoint = torch.load(PATH)
+      model.load_state_dict(checkpoint['model_state_dict'])
+      optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+      epoch = checkpoint['epoch']
+      loss = checkpoint['loss']
+    '''
+    
     pdn.train()
     if on_gpu:
         pdn = pdn.cuda()
 
     optimizer = torch.optim.Adam(pdn.parameters(), lr=1e-4, weight_decay=1e-5)
 
-    tqdm_obj = tqdm(range(60000)) # 60000
+    tqdm_obj = tqdm(range(20000)) # 60000
     for iteration, (image_fe, image_pdn) in zip(tqdm_obj, train_loader):
         if on_gpu:
             image_fe = image_fe.cuda()
@@ -112,13 +126,28 @@ def main():
             torch.save(pdn.state_dict(),
                        os.path.join(config.output_folder,
                                     f'teacher_{model_size}_tmp_state.pth'))
+            
+            torch.save({
+              'epoch': EPOCH,
+              'model_state_dict': net.state_dict(),
+              'optimizer_state_dict': optimizer.state_dict(),
+              'loss': LOSS,
+              }, PATH)
+              
+              
     torch.save(pdn,
                os.path.join(config.output_folder,
                             f'teacher_{model_size}_final.pth'))
     torch.save(pdn.state_dict(),
                os.path.join(config.output_folder,
                             f'teacher_{model_size}_final_state.pth'))
-
+    torch.save({
+            'epoch': EPOCH,
+            'model_state_dict': net.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': LOSS,
+            }, PATH)
+    
 
 @torch.no_grad()
 def feature_normalization(extractor, train_loader, steps=10000):
