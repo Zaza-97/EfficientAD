@@ -28,7 +28,7 @@ def get_argparse():
 # variables
 model_size = 'small'
 imagenet_train_path = '/kaggle/working/ImgNet_train/content/train' 
-state_path = ''
+state_path = '/kaggle/input/teacher-state-efficient-ad'
 PATH = 'model.pt' # aggiunto per ripredere training da checkpoint
 seed = 42
 on_gpu = torch.cuda.is_available()
