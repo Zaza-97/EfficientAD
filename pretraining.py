@@ -86,7 +86,7 @@ def main():
                                                       train_loader=train_loader)
     
     if state_path != '':
-      pnd.load_state_dict(torch.load(state_path))
+      pdn.load_state_dict(torch.load(state_path))
       
     '''  
     if PATH != '':
