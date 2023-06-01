@@ -127,12 +127,6 @@ def main():
                        os.path.join(config.output_folder,
                                     f'teacher_{model_size}_tmp_state.pth'))
             
-            torch.save({
-              'epoch': EPOCH,
-              'model_state_dict': net.state_dict(),
-              'optimizer_state_dict': optimizer.state_dict(),
-              'loss': LOSS,
-              }, PATH)
               
               
     torch.save(pdn,
@@ -141,13 +135,7 @@ def main():
     torch.save(pdn.state_dict(),
                os.path.join(config.output_folder,
                             f'teacher_{model_size}_final_state.pth'))
-    torch.save({
-            'epoch': EPOCH,
-            'model_state_dict': net.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'loss': LOSS,
-            }, PATH)
-    
+
 
 @torch.no_grad()
 def feature_normalization(extractor, train_loader, steps=10000):
