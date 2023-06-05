@@ -24,7 +24,7 @@ def get_argparse():
     parser.add_argument('-o', '--output_dir', default='output/1')
     parser.add_argument('-m', '--model_size', default='small',
                         choices=['small', 'medium'])
-    parser.add_argument('-w', '--weights', default='/kaggle/input/teacher-state-efficient-ad/teacher_small_tmp_state.pth')
+    parser.add_argument('-w', '--weights', default='/kaggle/input/teacher-small-final/teacher_small_final.pth')
     parser.add_argument('-i', '--imagenet_train_path',
                         default='/kaggle/working/ImgNet_train/content/train',
                         help='Set to "none" to disable ImageNet' +
