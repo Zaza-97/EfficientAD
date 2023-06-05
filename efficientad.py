@@ -37,7 +37,7 @@ def get_argparse():
                         # default='./mvtec_loco_anomaly_detection',
                         default = '/kaggle/working/',
                         help='Downloaded Mvtec LOCO dataset')
-    parser.add_argument('-t', '--train_steps', type=int, default=11)
+    parser.add_argument('-t', '--train_steps', type=int, default=70000)
     return parser.parse_args()
 
 # constants
