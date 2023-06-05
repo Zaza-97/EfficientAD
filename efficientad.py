@@ -168,7 +168,7 @@ def main():
     for iteration, (image_st, image_ae), image_penalty in zip(
             tqdm_obj, train_loader_infinite, penalty_loader_infinite):
         
-        print(f'iter{iteration})
+        print(f'iter{iteration}')
         if on_gpu:
             image_st = image_st.cuda()
             image_ae = image_ae.cuda()
