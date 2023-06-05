@@ -164,6 +164,7 @@ def main():
     scheduler = torch.optim.lr_scheduler.StepLR(
         optimizer, step_size=int(0.95 * config.train_steps), gamma=0.1)
     tqdm_obj = tqdm(range(config.train_steps))
+    print(tqdm_obj)
     for iteration, (image_st, image_ae), image_penalty in zip(
             tqdm_obj, train_loader_infinite, penalty_loader_infinite):
         if on_gpu:
