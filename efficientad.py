@@ -18,13 +18,13 @@ def get_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dataset', default='mvtec_ad',
                         choices=['mvtec_ad', 'mvtec_loco'])
-    parser.add_argument('-s', '--subdataset', default='bottle',
+    parser.add_argument('-s', '--subdataset', default='CHU178_lato_bava',
                         help='One of 15 sub-datasets of Mvtec AD or 5' +
                              'sub-datasets of Mvtec LOCO')
     parser.add_argument('-o', '--output_dir', default='output/1')
-    parser.add_argument('-m', '--model_size', default='small',
+    parser.add_argument('-m', '--model_size', default='medium',
                         choices=['small', 'medium'])
-    parser.add_argument('-w', '--weights', default='EfficientAD/models/teacher_small.pth')
+    parser.add_argument('-w', '--weights', default='EfficientAD/models/teacher_medium.pth')
     parser.add_argument('-i', '--imagenet_train_path',
                         default='/kaggle/working/ImgNet_train/content/train',
                         help='Set to "none" to disable ImageNet' +
@@ -39,6 +39,7 @@ def get_argparse():
                         help='Downloaded Mvtec LOCO dataset')
     parser.add_argument('-t', '--train_steps', type=int, default=10) #70000
     return parser.parse_args()
+
 
 # constants
 seed = 42
