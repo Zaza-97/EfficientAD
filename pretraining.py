@@ -27,7 +27,7 @@ def get_argparse():
 
 # variables
 model_size = 'small'
-imagenet_train_path = '/kaggle/working/ImgNet_train/content/train' 
+imagenet_train_path = '/kaggle/input/imagenet-100k-512px/imagenet_100k_512px/content/train' 
 # state_path = '/kaggle/input/teacher-state-efficient-ad/teacher_small_tmp_state.pth'
 state_path = ''
 seed = 42
