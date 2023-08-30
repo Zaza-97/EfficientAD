@@ -36,10 +36,10 @@ on_gpu = torch.cuda.is_available()
 device = 'cuda' if on_gpu else 'cpu'
 
 # constants
-out_channels = 512
+out_channels = 384
 grayscale_transform = transforms.RandomGrayscale(0.1)  # apply same to both
 extractor_transform = transforms.Compose([
-    transforms.Resize((1024, 1024)),
+    transforms.Resize((512, 512)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
@@ -62,13 +62,13 @@ def main():
 
     os.makedirs(config.output_folder)
 
-    backbone = torchvision.models.wide_resnet50_2(
-        weights=Wide_ResNet50_2_Weights.IMAGENET1K_V2)
+    backbone = torchvision.models.wide_resnet101_2(
+        weights=Wide_ResNet101_2_Weights.IMAGENET1K_V2)
 
     extractor = FeatureExtractor(backbone=backbone,
                                  layers_to_extract_from=['layer2', 'layer3'],
                                  device=device,
-                                 input_shape=(3, 1024, 1024))
+                                 input_shape=(3, 512, 512))
 
     if model_size == 'small':
         pdn = get_pdn_small(out_channels, padding=True)
