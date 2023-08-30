@@ -79,7 +79,7 @@ def main():
 
     train_set = ImageFolderWithoutTarget(imagenet_train_path,
                                          transform=train_transform)
-    train_loader = DataLoader(train_set, batch_size=16, shuffle=True,
+    train_loader = DataLoader(train_set, batch_size=8, shuffle=True,
                               num_workers=7, pin_memory=True)
     train_loader = InfiniteDataloader(train_loader)
 
