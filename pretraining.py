@@ -38,12 +38,12 @@ device = 'cuda' if on_gpu else 'cpu'
 out_channels = 512
 grayscale_transform = transforms.RandomGrayscale(0.1)  # apply same to both
 extractor_transform = transforms.Compose([
-    transforms.Resize((512, 512)),
+    transforms.Resize((1024, 1024)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 pdn_transform = transforms.Compose([
-    transforms.Resize((256, 256)),
+    transforms.Resize((512, 512)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
@@ -67,7 +67,7 @@ def main():
     extractor = FeatureExtractor(backbone=backbone,
                                  layers_to_extract_from=['layer2', 'layer3'],
                                  device=device,
-                                 input_shape=(3, 512, 512))
+                                 input_shape=(3, 1024, 1024))
 
     if model_size == 'small':
         pdn = get_pdn_small(out_channels, padding=True)
@@ -95,7 +95,7 @@ def main():
 
     optimizer = torch.optim.Adam(pdn.parameters(), lr=1e-4, weight_decay=1e-5)
 
-    tqdm_obj = tqdm(range(60000)) # 60000
+    tqdm_obj = tqdm(range(10000)) # 60000
     for iteration, (image_fe, image_pdn) in zip(tqdm_obj, train_loader):
         if on_gpu:
             image_fe = image_fe.cuda()
