@@ -96,7 +96,7 @@ def main():
 
     optimizer = torch.optim.Adam(pdn.parameters(), lr=1e-4, weight_decay=1e-5)
 
-    tqdm_obj = tqdm(range(1000)) # 60000
+    tqdm_obj = tqdm(range(20000)) # 60000
     for iteration, (image_fe, image_pdn) in zip(tqdm_obj, train_loader):
         if on_gpu:
             image_fe = image_fe.cuda()
@@ -131,7 +131,7 @@ def main():
 
 
 @torch.no_grad()
-def feature_normalization(extractor, train_loader, steps=10000):
+def feature_normalization(extractor, train_loader, steps=1000): # 10000
 
     mean_outputs = []
     normalization_count = 0
