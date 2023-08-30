@@ -26,7 +26,8 @@ def get_argparse():
     return parser.parse_args()
 
 # variables
-model_size = 'small'
+# model_size = 'small'
+model_size = 'medium'
 imagenet_train_path = '/kaggle/input/imagenet-100k-512px/imagenet_100k_512px/content/train' 
 # state_path = '/kaggle/input/teacher-state-efficient-ad/teacher_small_tmp_state.pth'
 state_path = ''
