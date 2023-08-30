@@ -10,7 +10,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from torchvision.models import Wide_ResNet101_2_Weights
+from torchvision.models import Wide_ResNet101_2_Weights, Wide_ResNet50_2_Weights
 from tqdm import tqdm
 from common import (get_pdn_small, get_pdn_medium,
                     ImageFolderWithoutTarget, InfiniteDataloader)
@@ -62,8 +62,8 @@ def main():
 
     os.makedirs(config.output_folder)
 
-    backbone = torchvision.models.wide_resnet101_2(
-        weights=Wide_ResNet101_2_Weights.IMAGENET1K_V1)
+    backbone = torchvision.models.wide_resnet50_2(
+        weights=Wide_ResNet50_2_Weights.IMAGENET1K_V2)
 
     extractor = FeatureExtractor(backbone=backbone,
                                  layers_to_extract_from=['layer2', 'layer3'],
