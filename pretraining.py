@@ -104,6 +104,8 @@ def main():
         target = extractor.embed(image_fe)
         target = (target - channel_mean) / channel_std
         prediction = pdn(image_pdn)
+        print(target.size())
+        print(prediction.size())
         loss = torch.mean((target - prediction)**2)
 
         optimizer.zero_grad()
