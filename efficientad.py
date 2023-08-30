@@ -44,8 +44,11 @@ def get_argparse():
 # constants
 seed = 42
 on_gpu = torch.cuda.is_available()
-out_channels = 384
-image_size = 256
+#out_channels = 384
+#image_size = 256
+out_channels = 512
+image_size = 512
+
 
 # data loading
 default_transform = transforms.Compose([
