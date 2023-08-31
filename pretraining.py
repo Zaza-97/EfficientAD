@@ -15,6 +15,7 @@ from tqdm import tqdm
 from common import (get_pdn_small, get_pdn_medium,
                     ImageFolderWithoutTarget, InfiniteDataloader)
 
+# resnet50 = torch.hub.load('facebookresearch/dino:main', 'dino_resnet50')
 
 def get_argparse():
     parser = argparse.ArgumentParser(
