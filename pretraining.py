@@ -39,12 +39,12 @@ device = 'cuda' if on_gpu else 'cpu'
 out_channels = 384
 grayscale_transform = transforms.RandomGrayscale(0.1)  # apply same to both
 extractor_transform = transforms.Compose([
-    transforms.Resize((512, 512)),
+    transforms.Resize((1024, 1024)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 pdn_transform = transforms.Compose([
-    transforms.Resize((256, 256)),
+    transforms.Resize((512, 512)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
@@ -68,7 +68,7 @@ def main():
     extractor = FeatureExtractor(backbone=backbone,
                                  layers_to_extract_from=['layer2', 'layer3'],
                                  device=device,
-                                 input_shape=(3, 512, 512))
+                                 input_shape=(3, 1024, 1024))
 
     if model_size == 'small':
         pdn = get_pdn_small(out_channels, padding=True)
@@ -79,7 +79,7 @@ def main():
 
     train_set = ImageFolderWithoutTarget(imagenet_train_path,
                                          transform=train_transform)
-    train_loader = DataLoader(train_set, batch_size=16, shuffle=True,
+    train_loader = DataLoader(train_set, batch_size=4, shuffle=True,
                               num_workers=7, pin_memory=True)
     train_loader = InfiniteDataloader(train_loader)
 
@@ -251,7 +251,7 @@ class FeatureExtractor(torch.nn.Module):
         # sized features, these are brought into the correct form here.
         features = self.forward_modules["preprocessing"](features)
         features = self.forward_modules["preadapt_aggregator"](features)
-        features = torch.reshape(features, (-1, 64, 64, out_channels))
+        features = torch.reshape(features, (-1, 128, 128, out_channels))
         features = torch.permute(features, (0, 3, 1, 2))
 
         return features
