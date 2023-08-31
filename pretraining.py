@@ -44,7 +44,7 @@ extractor_transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 pdn_transform = transforms.Compose([
-    transforms.Resize((512, 512)),
+    transforms.Resize((256, 256)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
@@ -251,7 +251,7 @@ class FeatureExtractor(torch.nn.Module):
         # sized features, these are brought into the correct form here.
         features = self.forward_modules["preprocessing"](features)
         features = self.forward_modules["preadapt_aggregator"](features)
-        features = torch.reshape(features, (-1, 128, 128, out_channels))
+        features = torch.reshape(features, (-1, 64, 64, out_channels))
         features = torch.permute(features, (0, 3, 1, 2))
 
         return features
