@@ -62,8 +62,8 @@ def main():
 
     os.makedirs(config.output_folder)
 
-    backbone = torchvision.models.wide_resnet101_2(
-        weights=Wide_ResNet101_2_Weights.IMAGENET1K_V2)
+    backbone = torchvision.models.wide_resnet50_2(
+        weights=Wide_ResNet50_2_Weights.IMAGENET1K_V2)
 
     extractor = FeatureExtractor(backbone=backbone,
                                  layers_to_extract_from=['layer2', 'layer3'],
