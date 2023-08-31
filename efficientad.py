@@ -24,7 +24,7 @@ def get_argparse():
     parser.add_argument('-o', '--output_dir', default='output/1')
     parser.add_argument('-m', '--model_size', default='medium',
                         choices=['small', 'medium'])
-    parser.add_argument('-w', '--weights', default='/kaggle/input/my-model/teacher_small_tmp_state.pth')
+    parser.add_argument('-w', '--weights', default='/kaggle/working/EfficientAD/teacher_small.pth')
     parser.add_argument('-i', '--imagenet_train_path',
                         default='/kaggle/working/ImgNet_train/content/train',
                         help='Set to "none" to disable ImageNet' +
@@ -46,7 +46,7 @@ seed = 42
 on_gpu = torch.cuda.is_available()
 #out_channels = 384
 #image_size = 256
-out_channels = 512
+out_channels = 768
 image_size = 512
 
 
