@@ -79,8 +79,8 @@ def main():
 
     train_set = ImageFolderWithoutTarget(imagenet_train_path,
                                          transform=train_transform)
-    train_loader = DataLoader(train_set, batch_size=4, shuffle=True,
-                              num_workers=7, pin_memory=True)
+    train_loader = DataLoader(train_set, batch_size=6, shuffle=True,
+                              num_workers=2, pin_memory=True) #7
     train_loader = InfiniteDataloader(train_loader)
 
     channel_mean, channel_std = feature_normalization(extractor=extractor,
@@ -96,7 +96,7 @@ def main():
 
     optimizer = torch.optim.Adam(pdn.parameters(), lr=1e-4, weight_decay=1e-5)
 
-    tqdm_obj = tqdm(range(20000)) # 60000
+    tqdm_obj = tqdm(range(30000)) # 60000
     for iteration, (image_fe, image_pdn) in zip(tqdm_obj, train_loader):
         if on_gpu:
             image_fe = image_fe.cuda()
