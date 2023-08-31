@@ -53,7 +53,16 @@ def get_autoencoder(out_channels=384):
                   padding=2),
         nn.ReLU(inplace=True),
         nn.Dropout(0.2),
-        nn.Upsample(size=56, mode='bilinear'),
+
+        # aggiunto da me
+        nn.Upsample(size=255, mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2),
+
+        
+        nn.Upsample(size=120, mode='bilinear'),  # 56
         nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1,
                   padding=1),
         nn.ReLU(inplace=True),
