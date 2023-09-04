@@ -48,7 +48,7 @@ on_gpu = torch.cuda.is_available()
 out_channels = 384
 image_size = 512
 im_height = 256 #256
-im_width = 256 #1344
+im_width = 1344 #1344
 
 
 # data loading
