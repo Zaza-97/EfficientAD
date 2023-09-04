@@ -3,6 +3,74 @@
 from torch import nn
 from torchvision.datasets import ImageFolder
 
+
+def get_autoencoder(im_height, im_width,out_channels=384):
+    return nn.Sequential(
+        # encoder
+        nn.Conv2d(in_channels=3, out_channels=32, kernel_size=4, stride=2,
+                  padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(in_channels=32, out_channels=32, kernel_size=4, stride=2,
+                  padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(in_channels=32, out_channels=64, kernel_size=4, stride=2,
+                  padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=2,
+                  padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=2,
+                  padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=8),
+        
+        # decoder
+        nn.Upsample(size=(int(im_height / 64) -1, int(im_width/64) - 1), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2),
+        
+        nn.Upsample(size=(int(im_height / 32) -1, int(im_width/32) - 1), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2),
+        
+        nn.Upsample(size=(int(im_height / 16) -1, int(im_width/16) - 1), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2),
+        
+        nn.Upsample(size=(int(im_height / 8) -1, int(im_width/8) - 1), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2),
+        
+        nn.Upsample(size=(int(im_height / 4) -1, int(im_width/4) - 1), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2),
+        
+        nn.Upsample(size=(int(im_height / 2) -1, int(im_width/2) - 1), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
+                  padding=2),
+        nn.ReLU(inplace=True),
+        nn.Dropout(0.2), 
+        
+        nn.Upsample(size=(int(im_height / 4), int(im_width/4) -8), mode='bilinear'),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1,
+                  padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(in_channels=64, out_channels=out_channels, kernel_size=3,
+                  stride=1, padding=1)
+    )
+
+'''
+
 def get_autoencoder(out_channels=384):
     return nn.Sequential(
         # encoder
@@ -69,6 +137,7 @@ def get_autoencoder(out_channels=384):
         nn.Conv2d(in_channels=64, out_channels=out_channels, kernel_size=3,
                   stride=1, padding=1)
     )
+'''
 
 def get_pdn_small(out_channels=384, padding=False):
     pad_mult = 1 if padding else 0
