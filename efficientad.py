@@ -202,8 +202,8 @@ def main():
             teacher_output_ae = teacher(image_ae)
             teacher_output_ae = (teacher_output_ae - teacher_mean) / teacher_std
         student_output_ae = student(image_ae)[:, out_channels:]
-        print(teacher_output_ae.size())
-        print(ae_output.size())
+        #print(teacher_output_ae.size())
+        #print(ae_output.size())
         distance_ae = (teacher_output_ae - ae_output)**2
         distance_stae = (ae_output - student_output_ae)**2
         loss_ae = torch.mean(distance_ae)
