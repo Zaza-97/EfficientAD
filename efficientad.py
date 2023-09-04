@@ -151,7 +151,8 @@ def main():
         raise Exception()
     state_dict = torch.load(config.weights, map_location='cpu')
     teacher.load_state_dict(state_dict)
-    autoencoder = get_autoencoder(out_channels)
+    # autoencoder = get_autoencoder(out_channels)
+    autoencoder = get_autoencoder(im_height = im_height, im_width = im_width, out_channels = out_channels)
 
     # teacher frozen
     teacher.eval()
