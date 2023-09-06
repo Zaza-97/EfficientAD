@@ -118,7 +118,7 @@ def main():
 
 
     train_loader = DataLoader(train_set, batch_size=1, shuffle=True,
-                              num_workers=4, pin_memory=True)
+                              num_workers=2, pin_memory=True)
     train_loader_infinite = InfiniteDataloader(train_loader)
     validation_loader = DataLoader(validation_set, batch_size=1)
 
@@ -135,7 +135,7 @@ def main():
         penalty_set = ImageFolderWithoutTarget(config.imagenet_train_path,
                                                transform=penalty_transform)
         penalty_loader = DataLoader(penalty_set, batch_size=1, shuffle=True,
-                                    num_workers=4, pin_memory=True)
+                                    num_workers=2, pin_memory=True)
         penalty_loader_infinite = InfiniteDataloader(penalty_loader)
     else:
         penalty_loader_infinite = itertools.repeat(None)
