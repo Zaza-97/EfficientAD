@@ -71,12 +71,12 @@ transform_ae = transforms.RandomChoice([
 
 default_transform = transforms.Compose([
     transforms.Resize((im_height, im_width)),
-    transforms.RandomRotation((15, 15)),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     #transforms.RandomChoice([transforms.RandomAutocontrast(p=0.5),
                             #transforms.v2.GaussianBlur(kernel_size=(5, 5), sigma=(0.1, 0.2))]),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    transforms.RandomRotation((2))
 ])
 
 transform_ae = transforms.RandomChoice([
