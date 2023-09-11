@@ -242,7 +242,7 @@ def main():
             tqdm_obj.set_description(
                 "Current loss: {:.4f}  ".format(loss_total.item()))
 
-        if iteration % 2000 == 0:
+        if iteration % 10 == 0: #2000
             torch.save(teacher, os.path.join(train_output_dir,
                                              'teacher_tmp.pth'))
             torch.save(student, os.path.join(train_output_dir,
@@ -250,7 +250,7 @@ def main():
             torch.save(autoencoder, os.path.join(train_output_dir,
                                                  'autoencoder_tmp.pth'))
 
-        if iteration % 2000 == 0 and iteration > 0:
+        if iteration % 10 == 0 and iteration > 0: #2000
             # run intermediate evaluation
             teacher.eval()
             student.eval()
