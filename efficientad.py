@@ -88,7 +88,7 @@ transform_ae = transforms.RandomChoice([
 
 
 def train_transform(image):
-    return default_transform(image), default_transform(transform_ae(image))
+    return default_transform_test(image), default_transform_test(transform_ae(image))
 
 def main():
     torch.manual_seed(seed)
