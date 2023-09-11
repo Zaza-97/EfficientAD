@@ -52,6 +52,7 @@ im_width = 1344 #1344
 
 
 # data loading
+'''
 default_transform = transforms.Compose([
     transforms.Resize((im_height, im_width)),
     # transforms.Resize((image_size, image_size))
@@ -63,6 +64,26 @@ transform_ae = transforms.RandomChoice([
     transforms.ColorJitter(contrast=0.2),
     transforms.ColorJitter(saturation=0.2)
 ])
+'''
+
+
+default_transform = transforms.Compose([
+    transforms.Resize((im_height, im_width)),
+    # transforms.Resize((image_size, image_size))
+    transforms.ToTensor(),
+    #transforms.RandomChoice([transforms.RandomAutocontrast(p=0.5),
+                            #transforms.v2.GaussianBlur(kernel_size=(5, 5), sigma=(0.1, 0.2))]),
+ 
+    transforms.RandomRotation((15, 15)),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+])
+
+transform_ae = transforms.RandomChoice([
+    transforms.ColorJitter(brightness=0.2),
+    transforms.ColorJitter(contrast=0.2),
+    transforms.ColorJitter(saturation=0.2)
+])
+
 
 def train_transform(image):
     return default_transform(image), default_transform(transform_ae(image))
