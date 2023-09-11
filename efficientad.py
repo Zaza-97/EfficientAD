@@ -52,13 +52,15 @@ im_width = 1344 #1344
 
 
 # data loading
-'''
-default_transform = transforms.Compose([
+
+default_transform_test = transforms.Compose([
     transforms.Resize((im_height, im_width)),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
+
+'''
 transform_ae = transforms.RandomChoice([
     transforms.ColorJitter(brightness=0.2),
     transforms.ColorJitter(contrast=0.2),
@@ -301,7 +303,7 @@ def test(test_set, teacher, student, autoencoder, teacher_mean, teacher_std,
     for image, target, path in tqdm(test_set, desc=desc):
         orig_width = image.width
         orig_height = image.height
-        image = default_transform(image)
+        image = default_transform_test(image)
         image = image[None]
         if on_gpu:
             image = image.cuda()
