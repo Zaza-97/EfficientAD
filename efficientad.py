@@ -76,7 +76,8 @@ default_transform = transforms.Compose([
     #transforms.RandomChoice([transforms.RandomAutocontrast(p=0.5),
                             #transforms.v2.GaussianBlur(kernel_size=(5, 5), sigma=(0.1, 0.2))]),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    transforms.RandomRotation((2))
+    # transforms.RandomRotation((0, 2))
+    transforms.RandomAffine(degrees=(0, 1), translate=(0.05, 0.05), scale=(0.90, 1.05))
 ])
 
 transform_ae = transforms.RandomChoice([
