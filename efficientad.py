@@ -28,8 +28,8 @@ def get_argparse():
                         choices=['small', 'medium'])
     parser.add_argument('-w', '--weights', default='/kaggle/working/EfficientAD/models/teacher_small.pth')
     
-    parser.add_argument('-w', '--weights_auto', default='/kaggle/working/EfficientAD/models/autoencoder_final.pth')
-    parser.add_argument('-w', '--weights_student', default='/kaggle/working/EfficientAD/models/student_final.pth.pth')
+    parser.add_argument('-wa', '--weights_auto', default='/kaggle/working/EfficientAD/models/autoencoder_final.pth')
+    parser.add_argument('-ws', '--weights_student', default='/kaggle/working/EfficientAD/models/student_final.pth.pth')
     
     parser.add_argument('-i', '--imagenet_train_path',
                         default='/kaggle/working/ImgNet_train/content/train',
