@@ -14,6 +14,8 @@ from common import get_autoencoder, get_pdn_small, get_pdn_medium, \
     ImageFolderWithoutTarget, ImageFolderWithPath, InfiniteDataloader
 from sklearn.metrics import roc_auc_score
 
+resume_traing = True
+
 def get_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dataset', default='mvtec_ad',
@@ -25,6 +27,10 @@ def get_argparse():
     parser.add_argument('-m', '--model_size', default='medium',
                         choices=['small', 'medium'])
     parser.add_argument('-w', '--weights', default='/kaggle/working/EfficientAD/models/teacher_small.pth')
+    
+    parser.add_argument('-w', '--weights_auto', default='/kaggle/working/EfficientAD/models/autoencoder_final.pth')
+    parser.add_argument('-w', '--weights_student', default='/kaggle/working/EfficientAD/models/student_final.pth.pth')
+    
     parser.add_argument('-i', '--imagenet_train_path',
                         default='/kaggle/working/ImgNet_train/content/train',
                         help='Set to "none" to disable ImageNet' +
@@ -94,7 +100,8 @@ def main():
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
-
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
     config = get_argparse()
 
     if config.dataset == 'mvtec_ad':
@@ -172,11 +179,18 @@ def main():
         student = get_pdn_medium(2 * out_channels)
     else:
         raise Exception()
-    state_dict = torch.load(config.weights, map_location='cpu')
+    state_dict = torch.load(config.weights, map_location=device)
     teacher.load_state_dict(state_dict)
     # autoencoder = get_autoencoder(out_channels)
     autoencoder = get_autoencoder(im_height = im_height, im_width = im_width, out_channels = out_channels)
-
+    
+    if resume_traing:
+        state_dict_auto = torch.load(config.weights_auto, map_location=device)
+        autoencoder.load_state_dict(state_dict_auto)
+        
+        state_dict_student = torch.load(config.weights_student, map_location=device)
+        student.load_state_dict(state_dict_student)
+        
     # teacher frozen
     teacher.eval()
     student.train()
