@@ -14,7 +14,7 @@ from common import get_autoencoder, get_pdn_small, get_pdn_medium, \
     ImageFolderWithoutTarget, ImageFolderWithPath, InfiniteDataloader
 from sklearn.metrics import roc_auc_score
 
-resume_traing = False
+resume_traing = True
 
 def get_argparse():
     parser = argparse.ArgumentParser()
