@@ -14,7 +14,7 @@ from common import get_autoencoder, get_pdn_small, get_pdn_medium, \
     ImageFolderWithoutTarget, ImageFolderWithPath, InfiniteDataloader
 from sklearn.metrics import roc_auc_score
 
-resume_traing = True
+resume_traing = False
 
 def get_argparse():
     parser = argparse.ArgumentParser()
@@ -83,7 +83,7 @@ default_transform = transforms.Compose([
                             #transforms.v2.GaussianBlur(kernel_size=(5, 5), sigma=(0.1, 0.2))]),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     # transforms.RandomRotation((0, 2))
-    transforms.RandomAffine(degrees=(0, 1), translate=(0.05, 0.05), scale=(0.90, 1.05))
+    transforms.RandomAffine(degrees=(0, 1.5), translate=(0.02, 0.02), scale=(0.98, 1.02))
 ])
 
 transform_ae = transforms.RandomChoice([
@@ -185,12 +185,19 @@ def main():
     autoencoder = get_autoencoder(im_height = im_height, im_width = im_width, out_channels = out_channels)
     
     if resume_traing:
-        state_dict_auto = torch.load(config.weights_auto, map_location=device)
-        autoencoder.load_state_dict(state_dict_auto)
+
+        checkpoint_auto = torch.load(config.weights_auto)
+        autoencoder.load_state_dict(checkpoint_auto['state_dict'])
+               
+        checkpoint_student = torch.load(config.weights_student)
+        student.load_state_dict(checkpoint_student['state_dict']) 
         
-        state_dict_student = torch.load(config.weights_student, map_location=device)
-        student.load_state_dict(state_dict_student)
+        checkpoint_teacher = torch.load(config.weights_teacher)
+        teacher.load_state_dict(checkpoint_teacher['state_dict']) 
         
+        optimizer.load_state_dict(checkpoint_auto['optimizer'])
+        
+    
     # teacher frozen
     teacher.eval()
     student.train()
@@ -203,11 +210,15 @@ def main():
 
     teacher_mean, teacher_std = teacher_normalization(teacher, train_loader)
 
-    optimizer = torch.optim.Adam(itertools.chain(student.parameters(),
-                                                 autoencoder.parameters()),
-                                 lr=1e-4, weight_decay=1e-5)
-    scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer, step_size=int(0.95 * config.train_steps), gamma=0.1)
+    if resume_traing:
+        optimizer.load_state_dict(checkpoint_auto['optimizer'])
+        scheduler.load_state_dict(checkpoint_auto['scheduler'])
+    else: 
+        optimizer = torch.optim.Adam(itertools.chain(student.parameters(),
+                                                     autoencoder.parameters()),
+                                     lr=1e-4, weight_decay=1e-5)
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=int(0.95 * config.train_steps), gamma=0.1)
+        
     tqdm_obj = tqdm(range(config.train_steps))
     
     for iteration, (image_st, image_ae), image_penalty in zip(
@@ -256,7 +267,7 @@ def main():
             tqdm_obj.set_description(
                 "Current loss: {:.4f}  ".format(loss_total.item()))
 
-        if iteration % 2000 == 0: #2000
+        if iteration % 5000 == 0: #2000
             torch.save(teacher, os.path.join(train_output_dir,
                                              'teacher_tmp.pth'))
             torch.save(student, os.path.join(train_output_dir,
@@ -264,7 +275,29 @@ def main():
             torch.save(autoencoder, os.path.join(train_output_dir,
                                                  'autoencoder_tmp.pth'))
 
-        if iteration % 2000 == 0 and iteration > 0: 
+            checkpoint_auto = {
+                'state_dict': autoencoder.state_dict(),
+                'optimizer': optimizer.state_dict()
+                'scheduler': scheduler.state_dict()
+                    }
+            
+            checkpoint_teacher = {
+                'state_dict': teacher.state_dict(),
+                'optimizer': optimizer.state_dict()
+                    }
+            
+            checkpoint_student = {
+                'state_dict': student.state_dict(),
+                'optimizer': optimizer.state_dict()
+                    }
+
+            
+            torch.save(checkpoint_auto, os.path.join(train_output_dir, 'autoencorder_ckp.pt'))
+            torch.save(checkpoint_teacher, os.path.join(train_output_dir, 'teacher_ckp.pt'))
+            torch.save(checkpoint_student, os.path.join(train_output_dir, 'student_ckp.pt'))
+
+                
+        if iteration % 5000 == 0 and iteration > 0: 
             # run intermediate evaluation
             teacher.eval()
             student.eval()
@@ -292,6 +325,7 @@ def main():
     student.eval()
     autoencoder.eval()
 
+    
     torch.save(teacher, os.path.join(train_output_dir, 'teacher_final.pth'))
     torch.save(student, os.path.join(train_output_dir, 'student_final.pth'))
     torch.save(autoencoder, os.path.join(train_output_dir,
