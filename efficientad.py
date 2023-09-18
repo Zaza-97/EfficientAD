@@ -277,7 +277,7 @@ def main():
 
             checkpoint_auto = {
                 'state_dict': autoencoder.state_dict(),
-                'optimizer': optimizer.state_dict()
+                'optimizer': optimizer.state_dict(),
                 'scheduler': scheduler.state_dict()
                     }
             
