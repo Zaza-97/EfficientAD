@@ -4,7 +4,7 @@ from torch import nn
 from torchvision.datasets import ImageFolder
 
 
-def get_autoencoder(im_height, im_width,out_channels=384):
+def get_autoencoder(im_height, im_width, out_height,out_width,out_channels=384):
     return nn.Sequential(
         # encoder
         nn.Conv2d(in_channels=3, out_channels=32, kernel_size=4, stride=2,
@@ -61,10 +61,12 @@ def get_autoencoder(im_height, im_width,out_channels=384):
         nn.ReLU(inplace=True),
         nn.Dropout(0.2), 
         
-        nn.Upsample(size=(int(im_height / 4) , int(im_width/4)), mode='bilinear'),
+        nn.Upsample(size=(int(im_height / 4) , int(im_width/4) ), mode='bilinear'),
         nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1,
                   padding=1),
         nn.ReLU(inplace=True),
+        
+        nn.Upsample(size=(out_height,out_width), mode='bilinear'),
         nn.Conv2d(in_channels=64, out_channels=out_channels, kernel_size=3,
                   stride=1, padding=1)
     )
