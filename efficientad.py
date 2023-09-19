@@ -14,7 +14,7 @@ from common import get_autoencoder, get_pdn_small, get_pdn_medium, \
     ImageFolderWithoutTarget, ImageFolderWithPath, InfiniteDataloader
 from sklearn.metrics import roc_auc_score
 
-resume_traing = True
+resume_traing = False
 
 def get_argparse():
     parser = argparse.ArgumentParser()
@@ -53,8 +53,8 @@ on_gpu = torch.cuda.is_available()
 #out_channels = 384
 out_channels = 384
 image_size = 512
-im_height = 256 #256
-im_width = 1344 #1344
+im_height = 192 #256
+im_width = 1008 #1344
 
 
 # data loading
