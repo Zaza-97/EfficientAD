@@ -56,12 +56,15 @@ image_size = 512
 im_height = 192 #256
 im_width = 1008 #1344
 
+pad_height = 256
 
+out_height_auto = int(pad_height / 4 - 8)
+out_width_auto = int(im_width / 4 - 8)
 # data loading
 
 default_transform_test = transforms.Compose([
     transforms.Resize((im_height, im_width)),
-    transforms.CenterCrop([256, im_width]),
+    transforms.CenterCrop([pad_height, im_width]),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -78,7 +81,7 @@ transform_ae = transforms.RandomChoice([
 
 default_transform = transforms.Compose([
     transforms.Resize((im_height, im_width)),
-    transforms.CenterCrop([256, im_width]),
+    transforms.CenterCrop([pad_height, im_width]),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     #transforms.RandomChoice([transforms.RandomAutocontrast(p=0.5),
@@ -184,7 +187,7 @@ def main():
     state_dict = torch.load(config.weights, map_location=device)
     teacher.load_state_dict(state_dict)
     # autoencoder = get_autoencoder(out_channels)
-    autoencoder = get_autoencoder(im_height = im_height, im_width = im_width, out_channels = out_channels)
+    autoencoder = get_autoencoder(im_height = im_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
     
     if resume_traing:
 
