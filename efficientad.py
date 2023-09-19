@@ -209,15 +209,14 @@ def main():
         autoencoder.cuda()
 
     teacher_mean, teacher_std = teacher_normalization(teacher, train_loader)
-
+    optimizer = torch.optim.Adam(itertools.chain(student.parameters(),
+                                                 autoencoder.parameters()),
+                                 lr=1e-4, weight_decay=1e-5)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=int(0.95 * config.train_steps), gamma=0.1)
+    
     if resume_traing:
         optimizer.load_state_dict(checkpoint_auto['optimizer'])
         scheduler.load_state_dict(checkpoint_auto['scheduler'])
-    else: 
-        optimizer = torch.optim.Adam(itertools.chain(student.parameters(),
-                                                     autoencoder.parameters()),
-                                     lr=1e-4, weight_decay=1e-5)
-        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=int(0.95 * config.train_steps), gamma=0.1)
         
     tqdm_obj = tqdm(range(config.train_steps))
     
