@@ -229,7 +229,8 @@ def main():
         if on_gpu:
             image_st = image_st.cuda()
             image_ae = image_ae.cuda()
-            # print(image_ae.size())
+            print(image_st.size())
+            print(image_ae.size())
             if image_penalty is not None:
                 image_penalty = image_penalty.cuda()
         with torch.no_grad():
