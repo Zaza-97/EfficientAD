@@ -61,6 +61,7 @@ im_width = 1008 #1344
 
 default_transform_test = transforms.Compose([
     transforms.Resize((im_height, im_width)),
+    transforms.CenterCrop([256, im_width]),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -77,6 +78,7 @@ transform_ae = transforms.RandomChoice([
 
 default_transform = transforms.Compose([
     transforms.Resize((im_height, im_width)),
+    transforms.CenterCrop([256, im_width]),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     #transforms.RandomChoice([transforms.RandomAutocontrast(p=0.5),
