@@ -192,10 +192,10 @@ def main():
         checkpoint_student = torch.load(config.weights_student)
         student.load_state_dict(checkpoint_student['state_dict']) 
         
-        checkpoint_teacher = torch.load(config.weights_teacher)
-        teacher.load_state_dict(checkpoint_teacher['state_dict']) 
+        #checkpoint_teacher = torch.load(config.weights_teacher)
+        #teacher.load_state_dict(checkpoint_teacher['state_dict']) 
         
-        optimizer.load_state_dict(checkpoint_auto['optimizer'])
+        #optimizer.load_state_dict(checkpoint_auto['optimizer'])
         
     
     # teacher frozen
