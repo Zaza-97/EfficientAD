@@ -53,8 +53,8 @@ on_gpu = torch.cuda.is_available()
 #out_channels = 384
 out_channels = 384
 image_size = 512
-im_height = 192 #256
-im_width = 1008 #1344
+im_height = 126 #256
+im_width = 672 #1344
 
 pad_height = 256
 
