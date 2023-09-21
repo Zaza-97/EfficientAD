@@ -10,7 +10,7 @@ import itertools
 import os
 import random
 from tqdm import tqdm
-from common import get_autoencoder, get_autoencoder_small, get_pdn_small, get_pdn_medium, \
+from common import get_autoencoder, get_autoencoder_small, get_pdn_small_max, get_pdn_small, get_pdn_medium, \
     ImageFolderWithoutTarget, ImageFolderWithPath, InfiniteDataloader
 from sklearn.metrics import roc_auc_score
 
@@ -178,7 +178,7 @@ def main():
     # create models
     if config.model_size == 'small':
         teacher = get_pdn_small(out_channels)
-        student = get_pdn_small(2 * out_channels)
+        student = get_pdn_small_max(2 * out_channels)
     elif config.model_size == 'medium':
         teacher = get_pdn_medium(out_channels)
         student = get_pdn_medium(2 * out_channels)
