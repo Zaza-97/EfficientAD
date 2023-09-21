@@ -384,8 +384,10 @@ def test(test_set, teacher, student, autoencoder, teacher_mean, teacher_std,
         y_score_image = np.max(map_combined)
         y_true.append(y_true_image)
         y_score.append(y_score_image)
-        print(y_score)
+        
     auc = roc_auc_score(y_true=y_true, y_score=y_score)
+    print(y_true)
+    print(y_score)
     return auc * 100
 
 @torch.no_grad()
