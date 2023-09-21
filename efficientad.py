@@ -187,7 +187,7 @@ def main():
     state_dict = torch.load(config.weights, map_location=device)
     teacher.load_state_dict(state_dict)
     # autoencoder = get_autoencoder(out_channels)
-    autoencoder = get_autoencoder(im_height = im_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
+    autoencoder = get_autoencoder(im_height = pad_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
     
     if resume_traing:
 
