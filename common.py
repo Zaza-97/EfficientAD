@@ -229,7 +229,7 @@ def get_pdn_small_max(out_channels=384, padding=False):
         nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3,
                   padding=1 * pad_mult),
         nn.ReLU(inplace=True),
-        nn.Conv2d(in_channels=256, out_channels=out_channels, kernel_size=4)
+        nn.Conv2d(in_channels=256, out_channels=out_channels, kernel_size=4))
 
         
 def get_pdn_small(out_channels=384, padding=False):
