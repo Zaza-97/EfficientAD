@@ -88,7 +88,7 @@ default_transform = transforms.Compose([
                             #transforms.v2.GaussianBlur(kernel_size=(5, 5), sigma=(0.1, 0.2))]),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     # transforms.RandomRotation((0, 2))
-    transforms.RandomAffine(degrees=(0, 1.5), translate=(0.02, 0.02), scale=(0.98, 1.02))
+    transforms.RandomAffine(degrees=(-1.5, 1.5), translate=(0.02, 0.02), scale=(0.98, 1.02))
 ])
 
 transform_ae = transforms.RandomChoice([
