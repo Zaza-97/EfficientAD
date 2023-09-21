@@ -25,11 +25,13 @@ def get_autoencoder(im_height, im_width, out_height,out_width,out_channels=384):
         nn.Conv2d(in_channels=64, out_channels=64, kernel_size=8),
         
         # decoder
-        nn.Upsample(size=(int(im_height / 64) -1, int(im_width/64) - 1), mode='bilinear'),
+        
+        nn.Upsample(size=(int(im_height / 60 ) -1, int(im_width/64) - 1), mode='bilinear'), #64
         nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
                   padding=2),
         nn.ReLU(inplace=True),
         nn.Dropout(0.2),
+        
         
         nn.Upsample(size=(int(im_height / 32) -1, int(im_width/32) - 1), mode='bilinear'),
         nn.Conv2d(in_channels=64, out_channels=64, kernel_size=4, stride=1,
