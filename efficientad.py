@@ -56,7 +56,7 @@ image_size = 512
 im_height = 126 #256
 im_width = 672 #1344
 
-pad_height = 256
+pad_height = 126 #256
 
 out_height_auto = int(pad_height / 4 - 8)
 out_width_auto = int(im_width / 4 - 8)
@@ -64,7 +64,7 @@ out_width_auto = int(im_width / 4 - 8)
 
 default_transform_test = transforms.Compose([
     transforms.Resize((im_height, im_width)),
-    transforms.CenterCrop([pad_height, im_width]),
+    # transforms.CenterCrop([pad_height, im_width]),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -81,7 +81,7 @@ transform_ae = transforms.RandomChoice([
 
 default_transform = transforms.Compose([
     transforms.Resize((im_height, im_width)),
-    transforms.CenterCrop([pad_height, im_width]),
+    # transforms.CenterCrop([pad_height, im_width]),
     # transforms.Resize((image_size, image_size))
     transforms.ToTensor(),
     #transforms.RandomChoice([transforms.RandomAutocontrast(p=0.5),
@@ -383,6 +383,7 @@ def test(test_set, teacher, student, autoencoder, teacher_mean, teacher_std,
         y_score_image = np.max(map_combined)
         y_true.append(y_true_image)
         y_score.append(y_score_image)
+        print(y_score)
     auc = roc_auc_score(y_true=y_true, y_score=y_score)
     return auc * 100
 
