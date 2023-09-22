@@ -58,8 +58,8 @@ im_width = 2016 #1344
 
 pad_height = im_height #256
 
-out_height_auto = int(pad_height / 4 - 8)
-out_width_auto = int(im_width / 4 - 8)
+out_height_auto = int(pad_height / 4 - 8) if int(pad_height % 4 ) == 0 else  int(pad_height / 4 - 8)  + 1
+out_width_auto = int(im_width / 4 - 8) if int(im_width % 4 ) == 0 else int(im_width / 4 - 8) + 1
 # data loading
 
 default_transform_test = transforms.Compose([
