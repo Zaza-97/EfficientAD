@@ -53,8 +53,8 @@ on_gpu = torch.cuda.is_available()
 #out_channels = 384
 out_channels = 384
 image_size = 512
-im_height = 128 #256
-im_width = 672 #1344
+im_height = 567 #256
+im_width = 3024 #1344
 
 pad_height = im_height #256
 
@@ -178,7 +178,7 @@ def main():
     # create models
     if config.model_size == 'small':
         teacher = get_pdn_small(out_channels)
-        student = get_pdn_small_max(2 * out_channels)
+        student = get_pdn_small(2 * out_channels)
     elif config.model_size == 'medium':
         teacher = get_pdn_medium(out_channels)
         student = get_pdn_medium(2 * out_channels)
@@ -187,8 +187,8 @@ def main():
     state_dict = torch.load(config.weights, map_location=device)
     teacher.load_state_dict(state_dict)
     # autoencoder = get_autoencoder(out_channels)
-    # autoencoder = get_autoencoder(im_height = pad_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
-    autoencoder = get_autoencoder_small(im_height = pad_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
+    autoencoder = get_autoencoder(im_height = pad_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
+    # autoencoder = get_autoencoder_small(im_height = pad_height, im_width = im_width, out_height=out_height_auto, out_width=out_width_auto, out_channels = out_channels)
     
     if resume_traing:
 
